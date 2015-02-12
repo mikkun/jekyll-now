@@ -4,12 +4,16 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+四十にして惑いっぱなし
 
 ### More Information
 
-A place to include any other types of information that you'd like to include about yourself. 
+* 大阪の片隅にてシェル芸人を目指し日々sh行中
+* 本業はラベル印刷業
+* コンピュータ関連についてはあくまでも趣味
+* Perl・sed・AWK・Haxeなどを嗜む
+* 最近はEgisonやGlueLangに関心あり
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[mikkun@mbg.nifty.com](mailto:mikkun@mbg.nifty.com)
