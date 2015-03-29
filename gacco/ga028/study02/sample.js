@@ -1,8 +1,8 @@
-// sample.js : シューティングゲーム
+// sample.js : シューティングゲーム「EVADE AND DESTROY」
 //
 // See : http://mikkun.github.io/gacco/ga028/study02/
 //
-// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-03-29
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-03-30
 
 "use strict";
 
@@ -47,6 +47,7 @@ function setup() {
     document.title = "EVADE AND DESTROY";
     document.getElementsByName("viewport")[0].content
         = "width=" + SCREEN_WIDTH;
+    document.body.style.backgroundColor = BG_COLOR;
 
     screenWidth = SCREEN_WIDTH;
     screenHeight = SCREEN_HEIGHT;
@@ -314,7 +315,7 @@ function loop() {
             player.is_gameover = true;
         }
         if (player.is_gameover && curYubiTouched) { // 再スタート
-            location.reload();
+            setup();
         }
     }
     player.move();
