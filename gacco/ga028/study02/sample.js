@@ -1,3 +1,9 @@
+// sample.js : シューティングゲーム
+//
+// See : http://mikkun.github.io/gacco/ga028/study02/
+//
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-03-29
+
 "use strict";
 
 var SCREEN_WIDTH = 320,
@@ -11,6 +17,7 @@ var SCREEN_WIDTH = 320,
     MAX_ENEMY = 8,
     MAX_BEAM = 8,
 
+    WAIT = 10,
     SCORE_LIMIT = 100000000,
 
     background = new Image(),
@@ -36,6 +43,10 @@ function object(o) {
 
 function setup() {
     var i;
+
+    document.title = "EVADE AND DESTROY";
+    document.getElementsByName("viewport")[0].content
+        = "width=" + SCREEN_WIDTH;
 
     screenWidth = SCREEN_WIDTH;
     screenHeight = SCREEN_HEIGHT;
@@ -76,6 +87,7 @@ function setup() {
         y: player_point.y,
         velocity: 24,
         is_alive: true,
+        is_gameover: false,
         pattern: 0,
         move: function () { // プレイヤー移動
             var sprite_x;
@@ -295,10 +307,13 @@ function loop() {
         }
         player.x = player_point.x;
     } else {
-        if (player.id >= 251 && player.id <= 254) { // 爆発パターン
+        if (player.id >= 251 && player.id <= 254 + WAIT) { // 爆発パターン
             player.id += 1;
         }
-        if (curYubiTouched) { // 再スタート
+        if (player.id === 255 + WAIT) { // ゲームオーバー
+            player.is_gameover = true;
+        }
+        if (player.is_gameover && curYubiTouched) { // 再スタート
             location.reload();
         }
     }
