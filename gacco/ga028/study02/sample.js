@@ -268,6 +268,8 @@ function setup() {
     for (i = 0; i < MAX_BEAM; i += 1) {
         beams[i] = object(beam);
     }
+
+    pbCtx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 function loop() {
