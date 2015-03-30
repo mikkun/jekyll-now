@@ -82,10 +82,9 @@ function setup() {
     player_point = new PhysicalPoint(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 64);
     player = {
         score: 0,
-        time: 0,
         id: 0,
-        x: player_point.x,
-        y: player_point.y,
+        x: SCREEN_WIDTH / 2,
+        y: -32768,
         velocity: 24,
         is_alive: true,
         is_gameover: false,
@@ -113,7 +112,7 @@ function setup() {
                 sprite_x = 256;
                 break;
             default: // 爆発パターン消去
-                this.y = 32767;
+                this.y = -32768;
             }
             pbCtx.drawImage(
                 sprite,
@@ -269,7 +268,14 @@ function setup() {
         beams[i] = object(beam);
     }
 
-    pbCtx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    // ローディング画面
+    pbCtx.beginPath();
+    pbCtx.fillStyle = BG_COLOR;
+    pbCtx.rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    pbCtx.fill();
+    pbCtx.font = FONT_FACE;
+    pbCtx.fillStyle = FONT_COLOR;
+    pbCtx.fillText("==== NOW  LOADING ====", SCREEN_WIDTH / 2, 12);
 }
 
 function loop() {
@@ -309,6 +315,7 @@ function loop() {
             );
         }
         player.x = player_point.x;
+        player.y = player_point.y;
     } else {
         if (player.id >= 251 && player.id <= 254 + WAIT) { // 爆発パターン
             player.id += 1;
