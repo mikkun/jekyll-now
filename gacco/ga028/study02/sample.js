@@ -2,7 +2,7 @@
 //
 // See : http://mikkun.github.io/gacco/ga028/study02/
 //
-// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-03-30
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-03-31
 
 "use strict";
 
@@ -25,8 +25,8 @@ var SCREEN_WIDTH = 320,
 
     bg_image = {},
     bg_images = [],
-    player_point,
     player = {},
+    player_point,
     shot = {},
     shots = [],
     enemy = {},
@@ -79,7 +79,6 @@ function setup() {
     }
 
     // プレイヤー
-    player_point = new PhysicalPoint(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 64);
     player = {
         score: 0,
         id: 0,
@@ -121,11 +120,12 @@ function setup() {
             );
         }
     };
+    player_point = new PhysicalPoint(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 64);
 
     // 自機ショット
     shot = {
         x: -32768,
-        y: player_point.y,
+        y: SCREEN_HEIGHT - 64,
         dy: 16,
         is_alive: false,
         pattern: 0,
@@ -207,7 +207,7 @@ function setup() {
             if (player.is_alive) { // 対自機
                 dx = this.x - player.x;
                 dy = this.y - player.y;
-                if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 24) {
+                if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 16) {
                     player.id = 251;
                     player.is_alive = false;
                 }
@@ -235,11 +235,15 @@ function setup() {
     beam = {
         x: 32767,
         y: 32767,
+        dx: 2,
         dy: 8,
+        dx_default: 2,
         is_alive: false,
         pattern: 0,
         move: function () { // 敵機ビーム移動
             this.y = this.y <= SCREEN_HEIGHT ? this.y : 32767;
+            this.dx
+                = this.y <= SCREEN_HEIGHT - 16 ? this.dx : this.dx_default;
             this.is_alive
                 = this.y >= 0 && this.y <= SCREEN_HEIGHT - 16 ? true : false;
             this.pattern = this.pattern === 0 ? 1 : 0;
@@ -307,27 +311,13 @@ function loop() {
         shots[i].move();
     }
 
-    // プレイヤー
-    if (player.is_alive) {
-        if (curYubiTouched) { // プレイヤー移動
-            player_point.setKasokudo(
-                (curYubiX - player_point.x) * player.velocity, 0
-            );
-        }
-        player.x = player_point.x;
-        player.y = player_point.y;
-    } else {
-        if (player.id >= 251 && player.id <= 254 + WAIT) { // 爆発パターン
-            player.id += 1;
-        }
-        if (player.id === 255 + WAIT) { // ゲームオーバー
-            player.is_gameover = true;
-        }
-        if (player.is_gameover && curYubiTouched) { // 再スタート
-            setup();
-        }
+    // 敵機ビーム
+    for (i = 0; i < MAX_BEAM; i += 1) {
+        beams[i].x += beams[i].dx;
+        beams[i].y += beams[i].dy;
+        beams[i].move();
+        beams[i].checkCollision();
     }
-    player.move();
 
     // 敵キャラクター
     for (i = 0; i < MAX_ENEMY; i += 1) {
@@ -346,6 +336,9 @@ function loop() {
                 }
                 beams[j].x = enemies[i].x + 1;
                 beams[j].y = enemies[i].y + 16;
+                beams[j].dx = player.x - enemies[i].x > 64 ?  beams[j].dx
+                            : enemies[i].x - player.x > 64 ? -beams[j].dx
+                            :                                 0;
                 break;
             }
         }
@@ -367,12 +360,27 @@ function loop() {
         enemies[i].checkCollision();
     }
 
-    // 敵機ビーム
-    for (i = 0; i < MAX_BEAM; i += 1) {
-        beams[i].y += beams[i].dy;
-        beams[i].move();
-        beams[i].checkCollision();
+    // プレイヤー
+    if (player.is_alive) {
+        if (curYubiTouched) { // プレイヤー移動
+            player_point.setKasokudo(
+                (curYubiX - player_point.x) * player.velocity, 0
+            );
+        }
+        player.x = Math.floor(player_point.x);
+        player.y = SCREEN_HEIGHT - 64;
+    } else {
+        if (player.id >= 251 && player.id <= 254 + WAIT) { // 爆発パターン
+            player.id += 1;
+        }
+        if (player.id === 255 + WAIT) { // ゲームオーバー
+            player.is_gameover = true;
+        }
+        if (player.is_gameover && curYubiTouched) { // 再スタート
+            setup();
+        }
     }
+    player.move();
 
     // 自機ショット用タップエリア
     pbCtx.drawImage(
