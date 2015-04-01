@@ -2,7 +2,7 @@
 //
 // See : http://mikkun.github.io/gacco/ga028/study02/
 //
-// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-03-31
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-04-02
 
 "use strict";
 
@@ -14,11 +14,14 @@ var SCREEN_WIDTH = 320,
 
     MAX_BG_IMAGE = 2,
     MAX_SHOT = 3,
-    MAX_ENEMY = 8,
-    MAX_BEAM = 8,
+    MIN_ENEMY = 8,
+    MIN_BEAM = 8,
+
+    MAX_LV = 8,
+    MAX_SCORE = 100000000,
 
     WAIT = 10,
-    SCORE_LIMIT = 100000000,
+    THRESHOLD_SCORE = 20000,
 
     background = new Image(),
     sprite = new Image(),
@@ -80,6 +83,7 @@ function setup() {
 
     // プレイヤー
     player = {
+        lv: 0,
         score: 0,
         id: 0,
         x: SCREEN_WIDTH / 2,
@@ -227,7 +231,7 @@ function setup() {
             }
         }
     };
-    for (i = 0; i < MAX_ENEMY; i += 1) {
+    for (i = 0; i < MIN_ENEMY + MAX_LV; i += 1) {
         enemies[i] = object(enemy);
     }
 
@@ -268,7 +272,7 @@ function setup() {
             }
         }
     };
-    for (i = 0; i < MAX_BEAM; i += 1) {
+    for (i = 0; i < MIN_BEAM + MAX_LV; i += 1) {
         beams[i] = object(beam);
     }
 
@@ -283,7 +287,7 @@ function setup() {
 }
 
 function loop() {
-    var i, j;
+    var i, j, curr_lv;
 
     pbCtx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -312,7 +316,7 @@ function loop() {
     }
 
     // 敵機ビーム
-    for (i = 0; i < MAX_BEAM; i += 1) {
+    for (i = 0; i < MIN_BEAM + player.lv; i += 1) {
         beams[i].x += beams[i].dx;
         beams[i].y += beams[i].dy;
         beams[i].move();
@@ -320,7 +324,7 @@ function loop() {
     }
 
     // 敵キャラクター
-    for (i = 0; i < MAX_ENEMY; i += 1) {
+    for (i = 0; i < MIN_ENEMY + player.lv; i += 1) {
         if (enemies[i].y > SCREEN_HEIGHT - 16) {
             enemies[i].id = Math.floor(Math.random() * 2);
             enemies[i].x = 16 + 32 * Math.floor(Math.random() * 10);
@@ -328,7 +332,7 @@ function loop() {
                 = -SCREEN_WIDTH + Math.floor(Math.random() * SCREEN_WIDTH);
         }
         if (enemies[i].id === 0 && Math.abs(player.x - enemies[i].x) <= 96) {
-            for (j = 0; j < MAX_BEAM; j += 1) { // 敵機ビーム発射
+            for (j = 0; j < MIN_BEAM + player.lv; j += 1) { // 敵機ビーム発射
                 if (beams[j].is_alive
                     || !(enemies[i].y >= 32 && enemies[i].y <= player.y - 64)
                     || Math.floor(Math.random() * 256) !== 0) {
@@ -401,12 +405,16 @@ function loop() {
     if (player.is_alive) {
         player.score += 1;
         player.score
-            = player.score > SCORE_LIMIT ? SCORE_LIMIT : player.score;
+            = player.score > MAX_SCORE ? MAX_SCORE : player.score;
     } else {
         pbCtx.fillText("===== GAME  OVER =====", SCREEN_WIDTH / 2, 12);
         pbCtx.fillText("--- TAP TO RESTART ---", SCREEN_WIDTH / 2, 24);
     }
     pbCtx.fillText("SCORE: " + player.score, 2, 12);
+
+    // 難易度計算
+    curr_lv = Math.floor(player.score / THRESHOLD_SCORE);
+    player.lv = curr_lv > MAX_LV ? MAX_LV : curr_lv;
 }
 
 function onPressed(n) {}
