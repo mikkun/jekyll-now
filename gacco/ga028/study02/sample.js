@@ -2,7 +2,7 @@
 //
 // See : http://mikkun.github.io/gacco/ga028/study02/
 //
-// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-04-02
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-04-08
 
 "use strict";
 
@@ -212,6 +212,8 @@ function setup() {
                 dx = this.x - player.x;
                 dy = this.y - player.y;
                 if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 16) {
+                    this.y = 32767;
+                    player.score += this.id === 0 ? this.pts : 0;
                     player.id = 251;
                     player.is_alive = false;
                 }
@@ -223,10 +225,10 @@ function setup() {
                 dx = this.x - shots[n].x;
                 dy = this.y - shots[n].y;
                 if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 16) {
+                    shots[n].y = this.id < 251 ? -32768 : shots[n].y;
                     player.score += this.id === 0 ? this.pts : 0;
                     this.id = this.id === 0 ? 251 : this.id;
                     this.is_alive = this.id >= 251 ? false : this.is_alive;
-                    shots[n].y = this.is_alive ? -32768 : shots[n].y;
                 }
             }
         }
@@ -266,6 +268,7 @@ function setup() {
                 dx = this.x - player.x;
                 dy = this.y - player.y;
                 if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 8) {
+                    this.y = 32767;
                     player.id = 251;
                     player.is_alive = false;
                 }
