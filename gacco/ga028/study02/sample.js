@@ -212,10 +212,11 @@ function setup() {
                 dx = this.x - player.x;
                 dy = this.y - player.y;
                 if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 16) {
-                    this.y = 32767;
                     player.score += this.id === 0 ? this.pts : 0;
                     player.id = 251;
                     player.is_alive = false;
+                    this.id = this.id < 251 ? 251 : this.id;
+                    this.is_alive = false;
                 }
             }
             for (n = 0; n < MAX_SHOT; n += 1) { // 対自機ショット
@@ -268,9 +269,9 @@ function setup() {
                 dx = this.x - player.x;
                 dy = this.y - player.y;
                 if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 8) {
-                    this.y = 32767;
                     player.id = 251;
                     player.is_alive = false;
+                    this.y = 32767;
                 }
             }
         }
