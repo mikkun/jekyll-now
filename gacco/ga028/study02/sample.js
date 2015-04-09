@@ -2,7 +2,7 @@
 //
 // See : http://mikkun.github.io/gacco/ga028/study02/
 //
-// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-04-08
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-04-09
 
 "use strict";
 
@@ -211,7 +211,7 @@ function setup() {
             if (player.is_alive) { // 対自機
                 dx = this.x - player.x;
                 dy = this.y - player.y;
-                if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 16) {
+                if (Math.pow(dx, 2) + Math.pow(dy, 2) < Math.pow(16, 2)) {
                     player.score += this.id === 0 ? this.pts : 0;
                     player.id = 251;
                     player.is_alive = false;
@@ -225,7 +225,7 @@ function setup() {
                 }
                 dx = this.x - shots[n].x;
                 dy = this.y - shots[n].y;
-                if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 16) {
+                if (Math.pow(dx, 2) + Math.pow(dy, 2) < Math.pow(16, 2)) {
                     shots[n].y = this.id < 251 ? -32768 : shots[n].y;
                     shots[n].is_alive
                         = this.id < 251 ? false : shots[n].is_alive;
@@ -270,7 +270,7 @@ function setup() {
             if (player.is_alive) { // 対自機
                 dx = this.x - player.x;
                 dy = this.y - player.y;
-                if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < 8) {
+                if (Math.pow(dx, 2) + Math.pow(dy, 2) < Math.pow(8, 2)) {
                     player.id = 251;
                     player.is_alive = false;
                     this.y = 32767;
