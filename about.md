@@ -12,7 +12,7 @@ permalink: /about/
 * 本業はラベル印刷業
 * コンピュータ関連についてはあくまでも趣味
 * Perl・sed・AWK・Haxeなどを嗜む
-* 最近はEgisonやGlueLangに関心あり
+* Haskellを勉強中
 
 ### Contact me
 
