@@ -70,21 +70,21 @@ It covers:
 
 ## Jekyll Now Features
 
-✓ Command-line free _fork-first workflow_, using GitHub.com to create, customize and post to your blog
-✓ Fully responsive and mobile optimized base theme (**[Theme Demo](http://jekyllnow.com)**)
-✓ Sass/Coffeescript support using Jekyll 2.0
-✓ Free hosting on your GitHub Pages user site
-✓ Markdown blogging
-✓ Syntax highlighting
-✓ Disqus commenting
-✓ Google Analytics integration
-✓ SVG social icons for your footer
+✓ Command-line free _fork-first workflow_, using GitHub.com to create, customize and post to your blog<br />
+✓ Fully responsive and mobile optimized base theme (**[Theme Demo](http://jekyllnow.com)**)<br />
+✓ Sass/Coffeescript support using Jekyll 2.0<br />
+✓ Free hosting on your GitHub Pages user site<br />
+✓ Markdown blogging<br />
+✓ Syntax highlighting<br />
+✓ Disqus commenting<br />
+✓ Google Analytics integration<br />
+✓ SVG social icons for your footer<br />
 ✓ 3 http requests, including your avatar
 
-✘ No installing dependancies
-✘ No need to set up local development
-✘ No configuring plugins
-✘ No need to spend time on theming
+✘ No installing dependancies<br />
+✘ No need to set up local development<br />
+✘ No configuring plugins<br />
+✘ No need to spend time on theming<br />
 ✘ More time to code other things ... wait ✓!
 
 ## Questions?
