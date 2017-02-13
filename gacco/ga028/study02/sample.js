@@ -2,7 +2,7 @@
 //
 // See : http://mikkun.github.io/gacco/ga028/study02/
 //
-// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2015-04-09
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2017-02-14
 
 "use strict";
 
@@ -13,15 +13,15 @@ var SCREEN_WIDTH = 320,
     FONT_COLOR = "rgb(255, 255, 255)",
 
     MAX_BG_IMAGE = 2,
-    MAX_SHOT = 3,
+    MAX_SHOT = 4,
     MIN_ENEMY = 8,
     MIN_BEAM = 8,
 
-    MAX_LV = 8,
+    MAX_LV = 16,
     MAX_SCORE = 100000000,
 
     WAIT = 10,
-    THRESHOLD_SCORE = 20000,
+    THRESHOLD_SCORE = 10000,
 
     background = new Image(),
     sprite = new Image(),
