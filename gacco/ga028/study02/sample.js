@@ -14,14 +14,14 @@ var SCREEN_WIDTH = 320,
 
     MAX_BG_IMAGE = 2,
     MAX_SHOT = 4,
-    MIN_ENEMY = 8,
-    MIN_BEAM = 8,
+    MIN_ENEMY = 4,
+    MIN_BEAM = 0,
 
-    MAX_LV = 16,
+    MAX_LV = 12,
     MAX_SCORE = 100000000,
 
     WAIT = 10,
-    THRESHOLD_SCORE = 10000,
+    THRESHOLD_SCORE = 5000,
 
     background = new Image(),
     sprite = new Image(),
