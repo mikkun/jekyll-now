@@ -2,7 +2,7 @@
 //
 // See : http://mikkun.github.io/gacco/ga028/study02/
 //
-// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2017-02-14
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2017-02-20
 
 "use strict";
 
@@ -35,7 +35,10 @@ var SCREEN_WIDTH = 320,
     enemy = {},
     enemies = [],
     beam = {},
-    beams = [];
+    beams = [],
+
+    hi_score,
+    valid_storage;
 
 // オブジェクトを継承
 function object(o) {
@@ -283,6 +286,15 @@ function setup() {
         beams[i] = object(beam);
     }
 
+    // ハイスコア
+    try {
+        hi_score = parseInt(localStorage.getItem("hi_score"), 10) || 0;
+        valid_storage = true;
+    } catch (e) {
+        hi_score = hi_score || 0;
+        valid_storage = false;
+    }
+
     // ローディング画面
     pbCtx.beginPath();
     pbCtx.fillStyle = BG_COLOR;
@@ -291,6 +303,9 @@ function setup() {
     pbCtx.font = FONT_FACE;
     pbCtx.fillStyle = FONT_COLOR;
     pbCtx.fillText("==== NOW  LOADING ====", SCREEN_WIDTH / 2, 12);
+    if (!valid_storage) {
+        pbCtx.fillText("--- STORAGE  ERROR ---", SCREEN_WIDTH / 2, 24);
+    }
 }
 
 function loop() {
@@ -385,6 +400,12 @@ function loop() {
             player.id += 1;
         }
         if (player.id === 255 + WAIT) { // ゲームオーバー
+            try {
+                localStorage.setItem("hi_score", hi_score);
+                valid_storage = true;
+            } catch (e) {
+                valid_storage = false;
+            }
             player.is_gameover = true;
         }
         if (player.is_gameover && curYubiTouched) { // 再スタート
@@ -412,7 +433,9 @@ function loop() {
     if (player.is_alive) {
         player.score += 1;
         player.score
-            = player.score > MAX_SCORE ? MAX_SCORE : player.score;
+            = player.score < MAX_SCORE ? player.score : MAX_SCORE;
+        hi_score = player.score < hi_score ? hi_score : player.score;
+        pbCtx.fillText("HI-SCORE: " + hi_score, SCREEN_WIDTH / 2, 12);
     } else {
         pbCtx.fillText("===== GAME  OVER =====", SCREEN_WIDTH / 2, 12);
         pbCtx.fillText("--- TAP TO RESTART ---", SCREEN_WIDTH / 2, 24);
