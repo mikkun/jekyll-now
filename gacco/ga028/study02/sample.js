@@ -406,7 +406,10 @@ function loop() {
             } catch (e) {
                 valid_storage = false;
             }
-            pbCtx.clearRect(0, SCREEN_HEIGHT - 32, 320, 32);
+            pbCtx.beginPath();
+            pbCtx.fillStyle = BG_COLOR;
+            pbCtx.rect(0, SCREEN_HEIGHT - 32, 320, 32);
+            pbCtx.fill();
             player.id = 0;
             player.is_gameover = true;
         }
