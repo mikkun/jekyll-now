@@ -2,7 +2,7 @@
 //
 // See : http://mikkun.github.io/gacco/ga028/study02/
 //
-// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2017-02-20
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2017-02-21
 
 "use strict";
 
@@ -20,7 +20,7 @@ var SCREEN_WIDTH = 320,
     MAX_LV = 12,
     MAX_SCORE = 100000000,
 
-    WAIT = 10,
+    WAIT = 15,
     THRESHOLD_SCORE = 5000,
 
     background = new Image(),
@@ -92,8 +92,8 @@ function setup() {
         x: SCREEN_WIDTH / 2,
         y: -32768,
         velocity: 24,
-        is_alive: true,
-        is_gameover: false,
+        is_alive: false,
+        is_gameover: true,
         pattern: 0,
         move: function () { // プレイヤー移動
             var sprite_x;
@@ -304,7 +304,7 @@ function setup() {
     pbCtx.fillStyle = FONT_COLOR;
     pbCtx.fillText("==== NOW  LOADING ====", SCREEN_WIDTH / 2, 12);
     if (!valid_storage) {
-        pbCtx.fillText("--- STORAGE  ERROR ---", SCREEN_WIDTH / 2, 24);
+        pbCtx.fillText("*** STORAGE  ERROR ***", SCREEN_WIDTH / 2, 24);
     }
 }
 
@@ -410,16 +410,29 @@ function loop() {
         }
         if (player.is_gameover && curYubiTouched) { // 再スタート
             setup();
+            player.is_alive = true;
+            player.is_gameover = false;
         }
     }
     player.move();
 
     // 自機ショット用タップエリア
-    pbCtx.drawImage(
-        sprite,
-        0, 32, 320, 32,
-        0, SCREEN_HEIGHT - 32, 320, 32
-    );
+    if (!player.is_gameover) {
+        pbCtx.drawImage(
+            sprite,
+            0, 32, 320, 32,
+            0, SCREEN_HEIGHT - 32, 320, 32
+        );
+    }
+
+    // タイトルバナー
+    if (player.is_gameover) {
+        pbCtx.drawImage(
+            sprite,
+            0, 64, 320, 32,
+            0, (SCREEN_HEIGHT - 32) / 2, 320, 32
+        );
+    }
 
     // 得点表示欄
     pbCtx.beginPath();
@@ -438,13 +451,13 @@ function loop() {
         pbCtx.fillText("HI-SCORE: " + hi_score, SCREEN_WIDTH / 2, 12);
     } else {
         pbCtx.fillText("===== GAME  OVER =====", SCREEN_WIDTH / 2, 12);
-        pbCtx.fillText("--- TAP TO RESTART ---", SCREEN_WIDTH / 2, 24);
+        pbCtx.fillText("---- TAP TO START ----", SCREEN_WIDTH / 2, 24);
     }
     pbCtx.fillText("SCORE: " + player.score, 2, 12);
 
     // 難易度計算
     curr_lv = Math.floor(player.score / THRESHOLD_SCORE);
-    player.lv = curr_lv > MAX_LV ? MAX_LV : curr_lv;
+    player.lv = curr_lv < MAX_LV ? curr_lv : MAX_LV;
 }
 
 function onPressed(n) {}
