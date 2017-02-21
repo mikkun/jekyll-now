@@ -406,10 +406,6 @@ function loop() {
             } catch (e) {
                 valid_storage = false;
             }
-            pbCtx.beginPath();
-            pbCtx.fillStyle = BG_COLOR;
-            pbCtx.rect(0, SCREEN_HEIGHT - 32, 320, 32);
-            pbCtx.fill();
             player.id = 0;
             player.is_gameover = true;
         }
@@ -422,20 +418,18 @@ function loop() {
     player.move();
 
     // 自機ショット用タップエリア
-    if (!player.is_gameover) {
-        pbCtx.drawImage(
-            sprite,
-            0, 32, 320, 32,
-            0, SCREEN_HEIGHT - 32, 320, 32
-        );
-    }
+    pbCtx.drawImage(
+        sprite,
+        0, 32, 320, 32,
+        0, SCREEN_HEIGHT - 32, 320, 32
+    );
 
     // タイトルバナー
     if (player.is_gameover) {
         pbCtx.drawImage(
             sprite,
             0, 64, 320, 32,
-            0, (SCREEN_HEIGHT - 32) / 2, 320, 32
+            0, (SCREEN_HEIGHT - 64) / 2, 320, 32
         );
     }
 
