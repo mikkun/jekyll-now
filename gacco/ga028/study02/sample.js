@@ -2,7 +2,7 @@
 //
 // See : http://mikkun.github.io/gacco/ga028/study02/
 //
-// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2017-02-21
+// Written by KUSANAGI Mitsuhisa <mikkun@mbg.nifty.com> / Date : 2017-02-22
 
 "use strict";
 
@@ -417,7 +417,7 @@ function loop() {
     player.move();
 
     // 自機ショット用タップエリア
-    if (!player.is_gameover) {
+    if (player.is_alive) {
         pbCtx.drawImage(
             sprite,
             0, 32, 320, 32,
