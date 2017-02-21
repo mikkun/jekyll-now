@@ -406,6 +406,8 @@ function loop() {
             } catch (e) {
                 valid_storage = false;
             }
+            pbCtx.clearRect(0, SCREEN_HEIGHT - 32, 320, 32);
+            player.id = 0;
             player.is_gameover = true;
         }
         if (player.is_gameover && curYubiTouched) { // 再スタート
@@ -417,7 +419,7 @@ function loop() {
     player.move();
 
     // 自機ショット用タップエリア
-    if (player.is_alive) {
+    if (!player.is_gameover) {
         pbCtx.drawImage(
             sprite,
             0, 32, 320, 32,
