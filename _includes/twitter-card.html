@@ -1,0 +1,20 @@
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@{{ site.footer-links.twitter }}" />
+
+{% if page.excerpt %}
+  <meta name="twitter:description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 200 }}" />
+{% else %}
+  <meta name="twitter:description" content="{{ site.description | truncate: 200 }}" />
+{% endif %}
+
+{% if page.title %}
+  <meta name="twitter:title" content="{{ page.title | append: ' - ' | append: site.name | truncate: 70 }}" />
+{% else %}
+  <meta name="twitter:title" content="{{ site.name | truncate: 70 }}" />
+{% endif %}
+
+<meta name="twitter:image" content="{{ site.avatar }}" />
+
+{% if page.url %}
+  <meta name="twitter:url" content="{{ site.url }}{{ page.url }}" />
+{% endif %}
