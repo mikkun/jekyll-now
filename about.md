@@ -4,15 +4,16 @@ title: About
 permalink: /about/
 ---
 
-四十にして惑いっぱなし
+四十にして惑いっぱなしの日曜プログラマ
 
 ### More Information
 
 * 大阪の片隅にてシェル芸人を目指し日々sh行中
 * 本業はラベル印刷業
 * コンピュータ関連についてはあくまでも趣味
-* Perl・sed・AWK・Haxeなどを嗜む
-* Haskellを勉強中
+* Debian Etch以来のGNU/Linuxユーザ
+* sed・AWK・Perl・JavaScriptなどを嗜む
+* PCとスマホ両ブラウザ対応のシューティングゲーム「[EVADE AND DESTROY](https://mikkun.github.io/evade-and-destroy/)」を作成([ソースコード](https://github.com/mikkun/evade-and-destroy))
 
 ### Contact me
 
