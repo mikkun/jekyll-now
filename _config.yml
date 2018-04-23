@@ -54,7 +54,6 @@ baseurl: ""
 #
 
 permalink: /:title/
-future: true
 
 # The release of Jekyll Now that you're using
 version: v1.2.0
@@ -73,10 +72,16 @@ kramdown:
 sass:
   style: :expanded # You might prefer to minify using :compressed
 
+# Specify how many items should be displayed per page
+paginate: 5
+# Specify the destination of the pagination pages
+paginate_path: /page:num/
+
 # Use the following plug-ins
 gems:
   - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
   - jekyll-feed # Create an Atom feed using the official Jekyll feed gem
+  - jekyll-paginate # Enable pagination
 
 # Exclude these files from your production _site
 exclude:
